@@ -38,3 +38,14 @@ def unauthorized() -> str:
     error handling for unauthorized requests.
     """
     abort(401)
+
+
+@app_views.route('/forbidden', methods=['GET'], strict_slashes=False)
+def forbidden() -> str:
+    """
+    GET /api/v1/forbidden
+    Raise a 403 error to trigger the forbidden error handler.
+    This endpoint is used for testing the
+    error handling for forbidden requests.
+    """
+    abort(403)
