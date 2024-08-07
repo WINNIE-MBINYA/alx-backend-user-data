@@ -7,18 +7,21 @@ from api.v1.views import app_views
 
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status() -> str:
-    """ GET /api/v1/status
+    """
+    GET /api/v1/status
     Return:
-      - the status of the API
+      - a JSON object indicating the status of the API.
     """
     return jsonify({"status": "OK"})
 
 
 @app_views.route('/stats/', strict_slashes=False)
 def stats() -> str:
-    """ GET /api/v1/stats
+    """
+    GET /api/v1/stats
     Return:
-      - the number of each objects
+      - a JSON object containing the number of each object in the database.
+      - For example, the number of users.
     """
     from models.user import User
     stats = {}
@@ -26,9 +29,12 @@ def stats() -> str:
     return jsonify(stats)
 
 
-@app_views.route('unauthorized', methods=['GET'], strictslashes=False)
+@app_views.route('/unauthorized', methods=['GET'], strict_slashes=False)
 def unauthorized() -> str:
-    """GET /api/v1unauthorized
-    Raise a 401 error to trigger the handler
+    """
+    GET /api/v1/unauthorized
+    Raise a 401 error to trigger the unauthorized error handler.
+    This endpoint is used for testing the
+    error handling for unauthorized requests.
     """
     abort(401)
