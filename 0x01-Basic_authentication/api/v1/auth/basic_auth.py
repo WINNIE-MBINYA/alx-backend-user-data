@@ -16,11 +16,13 @@ class BasicAuth(Auth):
         Returns:
             str: The decoded string, or None if decoding fails.
         """
+        # Check if the input is None or not a string
         if base64_authorization_header is None or \
                 not isinstance(base64_authorization_header, str):
             return None
         try:
+            # Decode the Base64 authorization header
             decoded = base64.b64decode(base64_authorization_header)
-            return decoded.decode('utf-8')
+            return decoded.decode('utf-8')  # Convert bytes to UTF-8 string
         except Exception:
-            return None
+            return None  # Return None if decoding fails
