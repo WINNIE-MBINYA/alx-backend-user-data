@@ -36,7 +36,8 @@ class Auth:
 
     Methods:
         require_auth: Determines if a given path requires authentication.
-        authorization_header: Returns the authorization header from request.
+        authorization_header: Returns the authorization header
+                              from the request.
         current_user: Returns the current user based on the request.
     """
 
@@ -45,16 +46,39 @@ class Auth:
         Determines if a given path requires authentication.
 
         Args:
-            path (str): The path to check for authentication requirement.
-            excluded_paths (List[str]): A list of paths that are excluded
-                                        from authentication.
+            path (str): The path to check for authentication
+                        requirement.
+            excluded_paths (List[str]): A list of paths that are
+                                        excluded from authentication.
 
         Returns:
-            bool: False for now, indicating that no path
-                  requires authentication.
-                  This will be implemented later to provide actual logic.
+            bool: True if the path requires authentication,
+                  False otherwise.
+
+            Returns True if:
+                - The path is None.
+                - excluded_paths is None or an empty list.
+
+            Returns False if:
+                - The path is in excluded_paths or matches
+                  an excluded path.
         """
-        return False
+        if path is None:
+            return True
+        if not excluded_paths:
+            return True
+
+        # Ensure the path ends with a slash for comparison
+        if not path.endswith('/'):
+            path += '/'
+
+        # Check if the path is in the excluded paths
+        for excluded_path in excluded_paths:
+            if excluded_path.endswith('/'):
+                if path == excluded_path:
+                    return False
+
+        return True
 
     def authorization_header(self, request=None) -> str:
         """
@@ -64,8 +88,8 @@ class Auth:
             request: The Flask request object. Defaults to None.
 
         Returns:
-            str: None for now, indicating that no authorization header
-                 is returned.
+            str: None for now, indicating that no authorization
+                 header is returned.
                  This will be implemented later to extract the
                  authorization header from the request.
         """
@@ -79,9 +103,10 @@ class Auth:
             request: The Flask request object. Defaults to None.
 
         Returns:
-            TypeVar('User'): None for now, indicating that the current user
-                            is not determined.
-                            This will be implemented later to return the user
-                            based on authentication details in the request.
+            TypeVar('User'): None for now, indicating that the
+                             current user is not determined.
+                             This will be implemented later to
+                             return the user based on the
+                             authentication details in the request.
         """
         return None
