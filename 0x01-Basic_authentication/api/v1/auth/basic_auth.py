@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import base64
+import base64  # Standard Library for Base64 encoding and decoding
 
 
 class BasicAuth(Auth):
