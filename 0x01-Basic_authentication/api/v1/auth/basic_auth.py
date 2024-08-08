@@ -30,6 +30,7 @@ from typing import Optional, Tuple
 from api.v1.auth.auth import Auth
 import base64  # Standard Library for Base64 encoding and decoding
 from models.user import User  # Import User model
+from typing import List, Optional
 
 
 class BasicAuth(Auth):
@@ -123,3 +124,33 @@ class BasicAuth(Auth):
         user_email, user_pwd = self.extract_user_credentials(decoded_b64)
         user = self.user_object_from_credentials(user_email, user_pwd)
         return user
+
+    def require_auth(
+        self, path: Optional[str], excluded_paths: Optional[List[str]]
+    ) -> bool:
+        """Determine if a given path requires authentication.
+
+        Args:
+            path: The path to check (e.g., "/api/v1/status").
+            excluded_paths: A list of paths that are excluded from
+                            authentication. Wildcards ('*') are
+                            supported at the end of paths.
+
+        Returns:
+            True if the path requires authentication, False otherwise.
+        """
+        if path is None or excluded_paths is None or not excluded_paths:
+            return True
+
+        path = path.rstrip('/')
+
+        for excluded_path in excluded_paths:
+            excluded_path = excluded_path.rstrip('/')
+
+            if excluded_path.endswith('*'):
+                if path.startswith(excluded_path[:-1]):
+                    return False
+            elif path == excluded_path:
+                return False
+
+        return True
