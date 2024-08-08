@@ -13,7 +13,7 @@ Classes:
 Methods:
     require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         Determines if a given path requires authentication.
-        
+
     authorization_header(self, request=None) -> str:
         Returns the authorization header from the request.
 
@@ -23,6 +23,7 @@ Methods:
 
 from flask import request
 from typing import List, TypeVar
+
 
 class Auth:
     """
@@ -35,7 +36,7 @@ class Auth:
 
     Methods:
         require_auth: Determines if a given path requires authentication.
-        authorization_header: Returns the authorization header from the request.
+        authorization_header: Returns the authorization header from request.
         current_user: Returns the current user based on the request.
     """
 
@@ -45,10 +46,12 @@ class Auth:
 
         Args:
             path (str): The path to check for authentication requirement.
-            excluded_paths (List[str]): A list of paths that are excluded from authentication.
+            excluded_paths (List[str]): A list of paths that are excluded
+                                        from authentication.
 
         Returns:
-            bool: False for now, indicating that no path requires authentication.
+            bool: False for now, indicating that no path
+                  requires authentication.
                   This will be implemented later to provide actual logic.
         """
         return False
@@ -61,9 +64,10 @@ class Auth:
             request: The Flask request object. Defaults to None.
 
         Returns:
-            str: None for now, indicating that no authorization header is returned.
-                 This will be implemented later to extract the authorization header
-                 from the request.
+            str: None for now, indicating that no authorization header
+                 is returned.
+                 This will be implemented later to extract the
+                 authorization header from the request.
         """
         return None
 
@@ -75,8 +79,9 @@ class Auth:
             request: The Flask request object. Defaults to None.
 
         Returns:
-            TypeVar('User'): None for now, indicating that the current user is not determined.
-                             This will be implemented later to return the user based on the
-                             authentication details in the request.
+            TypeVar('User'): None for now, indicating that the current user
+                            is not determined.
+                            This will be implemented later to return the user
+                            based on authentication details in the request.
         """
         return None
